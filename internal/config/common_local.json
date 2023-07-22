@@ -1,0 +1,11 @@
+{
+  "common": {
+    "server_port": "8085"
+  },
+  "db_config": {
+    "url": "",
+    "username":"root",
+    "password": "",
+    "database": "appliance"
+  }
+}
