@@ -3,7 +3,7 @@
     "server_port": "8085"
   },
   "db_config": {
-    "url": "",
+    "url": "postgres:5432",
     "username":"root",
     "password": "",
     "database": "appliance"
