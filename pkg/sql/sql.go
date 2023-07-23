@@ -6,8 +6,6 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-var DB *gorm.DB
-
 type DBConfig struct {
 	Url      string `json:"url"`
 	UserName string `json:"username"`
@@ -15,9 +13,9 @@ type DBConfig struct {
 	DataBase string `json:"database"`
 }
 
-func DBConn(conf *DBConfig) (err error) {
+func DBConn(conf *DBConfig) (db *gorm.DB, err error) {
 	url := fmt.Sprintf("%s:%s@(%s)/%s?charset=utf8&parseTime=True&loc=Local", conf.UserName, conf.Password, conf.Url, conf.DataBase)
-	DB, err = gorm.Open("mysql", url)
-	DB = DB.LogMode(true)
+	db, err = gorm.Open("mysql", url)
+	db = db.LogMode(true)
 	return
 }

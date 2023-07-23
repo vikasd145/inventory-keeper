@@ -2,8 +2,28 @@ package appliance
 
 import (
 	"fmt"
-	"github.com/vikasd145/inventory-keeper/pkg/sql"
+	"github.com/jinzhu/gorm"
 )
+
+type ApplianceRepository interface {
+	Get() (Appliance, error)
+	Search() ([]Appliance, error)
+	Create() (Appliance, error)
+	Update(id int64) error
+	GetAll() ([]Appliance, error)
+}
+
+type ApplianceModel struct {
+	DB    *gorm.DB
+	Model *Appliance
+}
+
+func NewApplianceModel(db *gorm.DB, model *Appliance) ApplianceRepository {
+	return &ApplianceModel{
+		DB:    db,
+		Model: model,
+	}
+}
 
 type Appliance struct {
 	ID           int64  `json:"id" gorm:"primary_key"`
@@ -14,45 +34,48 @@ type Appliance struct {
 	DateBought   string `json:"date_bought"`
 }
 
-func (c *Appliance) Get() error {
-	err := sql.DB.Model(c).First(c).Error
-	return err
+func (c *ApplianceModel) Get() (Appliance, error) {
+	err := c.DB.Model(c.Model).First(c.Model).Error
+	return *c.Model, err
 }
 
-func (c *Appliance) Search() ([]Appliance, error) {
+func (c *ApplianceModel) Search() ([]Appliance, error) {
 	var cs []Appliance
 	whereStr := ""
-	if c.SerialNumber != "" {
-		whereStr += fmt.Sprintf("%s=\"%s\"", "serial_number", c.SerialNumber)
+	if c.Model.SerialNumber != "" {
+		whereStr += fmt.Sprintf("%s=\"%s\" and ", "serial_number", c.Model.SerialNumber)
 	}
-	if c.Brand != "" {
-		whereStr += fmt.Sprintf("%s=\"%s\"", "brand", c.Brand)
+	if c.Model.Brand != "" {
+		whereStr += fmt.Sprintf("%s=\"%s\" and ", "brand", c.Model.Brand)
 	}
-	if c.Model != "" {
-		whereStr += fmt.Sprintf("%s=\"%s\"", "model", c.Model)
+	if c.Model.Model != "" {
+		whereStr += fmt.Sprintf("%s=\"%s\" and ", "model", c.Model.Model)
 	}
-	if c.Status != "" {
-		whereStr += fmt.Sprintf("%s=\"%s\"", "status", c.Status)
+	if c.Model.Status != "" {
+		whereStr += fmt.Sprintf("%s=\"%s\" and ", "status", c.Model.Status)
 	}
-	if c.DateBought != "" {
-		whereStr += fmt.Sprintf("%s=\"%s\"", "date_bought", c.DateBought)
+	if c.Model.DateBought != "" {
+		whereStr += fmt.Sprintf("%s=\"%s\" and ", "date_bought", c.Model.DateBought)
 	}
-	err := sql.DB.Model(c).Where(whereStr).Find(&cs).Error
+	if len(whereStr) >= 4 && whereStr[len(whereStr)-4:] == "and " {
+		whereStr = whereStr[:len(whereStr)-4]
+	}
+	err := c.DB.Model(c.Model).Where(whereStr).Find(&cs).Error
 	return cs, err
 }
 
-func (c *Appliance) GetAll() ([]Appliance, error) {
+func (c *ApplianceModel) GetAll() ([]Appliance, error) {
 	var cs []Appliance
-	err := sql.DB.Model(c).Find(&cs).Error
+	err := c.DB.Model(c.Model).Find(&cs).Error
 	return cs, err
 }
 
-func (c *Appliance) Create() (err error) {
-	err = sql.DB.Model(c).Create(c).Error
-	return
+func (c *ApplianceModel) Create() (Appliance, error) {
+	err := c.DB.Model(c.Model).Create(c.Model).Error
+	return *c.Model, err
 }
 
-func (c *Appliance) Update(id int64) (err error) {
-	err = sql.DB.Model(c).Where("id=?", id).Update(c).Error
+func (c *ApplianceModel) Update(id int64) (err error) {
+	err = c.DB.Model(c.Model).Where("id=?", id).Update(c.Model).Error
 	return
 }

@@ -2,12 +2,33 @@ package appliance
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"github.com/vikasd145/inventory-keeper/pkg/logger"
 	"net/http"
 	"strconv"
 )
 
-func ViewAppliance(g *gin.Context) {
+type ApplianceProcessorInterface interface {
+	ViewAppliance(g *gin.Context)
+	SearchAppliance(g *gin.Context)
+	CreateAppliance(g *gin.Context)
+	UpdateAppliance(g *gin.Context)
+	ViewAllAppliance(g *gin.Context)
+}
+
+type ApplianceProcessor struct {
+	Repo ApplianceRepository
+	DB   *gorm.DB
+}
+
+func NewApplianceProcessor(repo ApplianceRepository, db *gorm.DB) ApplianceProcessorInterface {
+	return &ApplianceProcessor{
+		Repo: repo,
+		DB:   db,
+	}
+}
+
+func (p *ApplianceProcessor) ViewAppliance(g *gin.Context) {
 	var id int
 	var err error
 	ids := g.Param("id")
@@ -22,7 +43,11 @@ func ViewAppliance(g *gin.Context) {
 	app := &Appliance{
 		ID: int64(id),
 	}
-	err = app.Get()
+	p.Repo = &ApplianceModel{
+		Model: app,
+		DB:    p.DB,
+	}
+	respApp, err := p.Repo.Get()
 	if err != nil {
 		g.JSON(http.StatusInternalServerError, gin.H{
 			"data":     nil,
@@ -31,13 +56,13 @@ func ViewAppliance(g *gin.Context) {
 		return
 	}
 	g.JSON(http.StatusOK, gin.H{
-		"data":     app,
+		"data":     respApp,
 		"debugMsg": "",
 	})
 	return
 }
 
-func SearchAppliance(g *gin.Context) {
+func (p *ApplianceProcessor) SearchAppliance(g *gin.Context) {
 	appReq := &ApplianceReq{}
 	err := g.ShouldBindJSON(appReq)
 	if err != nil {
@@ -56,7 +81,11 @@ func SearchAppliance(g *gin.Context) {
 		Status:       appReq.Status,
 		DateBought:   appReq.DateBought,
 	}
-	appList, err := app.Search()
+	p.Repo = &ApplianceModel{
+		Model: app,
+		DB:    p.DB,
+	}
+	appList, err := p.Repo.Search()
 	if err != nil {
 		logger.ErrorLogger.Printf("error in creating appliance, err:%v", err)
 		g.JSON(http.StatusInternalServerError, gin.H{
@@ -72,7 +101,7 @@ func SearchAppliance(g *gin.Context) {
 	return
 }
 
-func CreateAppliance(g *gin.Context) {
+func (p *ApplianceProcessor) CreateAppliance(g *gin.Context) {
 	appReq := &ApplianceReq{}
 	err := g.ShouldBindJSON(appReq)
 	if err != nil {
@@ -91,7 +120,12 @@ func CreateAppliance(g *gin.Context) {
 		Status:       appReq.Status,
 		DateBought:   appReq.DateBought,
 	}
-	err = app.Create()
+	p.Repo = &ApplianceModel{
+		Model: app,
+		DB:    p.DB,
+	}
+
+	_, err = p.Repo.Create()
 	if err != nil {
 		logger.ErrorLogger.Printf("error in creating appliance, err:%v", err)
 		g.JSON(http.StatusInternalServerError, gin.H{
@@ -101,7 +135,7 @@ func CreateAppliance(g *gin.Context) {
 		return
 	}
 	g.JSON(http.StatusOK, gin.H{
-		"data":     app,
+		"data":     "",
 		"debugMsg": "",
 	})
 	return
@@ -111,12 +145,12 @@ type ApplianceReq struct {
 	ID           string `json:"id"`
 	SerialNumber string `json:"serial_number"`
 	Brand        string `json:"brand"`
-	Model        string `json:"model"`
+	Model        string `json:"Model"`
 	Status       string `json:"status"`
 	DateBought   string `json:"date_bought"`
 }
 
-func UpdateAppliance(g *gin.Context) {
+func (p *ApplianceProcessor) UpdateAppliance(g *gin.Context) {
 	appReq := &ApplianceReq{}
 	err := g.ShouldBindJSON(appReq)
 	if err != nil {
@@ -145,7 +179,12 @@ func UpdateAppliance(g *gin.Context) {
 		DateBought:   appReq.DateBought,
 	}
 
-	err = app.Update(int64(id))
+	p.Repo = &ApplianceModel{
+		Model: app,
+		DB:    p.DB,
+	}
+
+	err = p.Repo.Update(int64(id))
 	if err != nil {
 		logger.ErrorLogger.Printf("error in updating appliance, err:%v", err)
 		g.JSON(http.StatusInternalServerError, gin.H{
@@ -161,7 +200,7 @@ func UpdateAppliance(g *gin.Context) {
 	return
 }
 
-func ViewAllAppliance(g *gin.Context) {
+func (p *ApplianceProcessor) ViewAllAppliance(g *gin.Context) {
 	var err error
 	app := &Appliance{}
 	err = g.ShouldBindJSON(app)
@@ -173,7 +212,11 @@ func ViewAllAppliance(g *gin.Context) {
 		})
 		return
 	}
-	appList, err := app.GetAll()
+	p.Repo = &ApplianceModel{
+		Model: app,
+		DB:    p.DB,
+	}
+	appList, err := p.Repo.GetAll()
 	if err != nil {
 		g.JSON(http.StatusInternalServerError, gin.H{
 			"data":     nil,

@@ -1,0 +1,48 @@
+INFO: 2023/07/23 15:23:49 processor.go:115: CreateAppliance, req:&{product1 0000001 sony phone not_sold 00001}
+DBLOG: 2023/07/23 15:23:56 main.go:873: log/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:71Error 1146: Table 'appliance.appliances' doesn't exist
+DBLOG: 2023/07/23 15:23:56 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:715.52031msINSERT INTO `appliances` (`serial_number`,`brand`,`model`,`status`,`date_bought`) VALUES (?,?,?,?,?)[0000001 sony phone not_sold 00001] 0
+ERROR: 2023/07/23 15:23:56 processor.go:130: error in creating appliance, err:Error 1146: Table 'appliance.appliances' doesn't exist
+INFO: 2023/07/23 15:24:54 processor.go:115: CreateAppliance, req:&{product1 0000001 sony phone not_sold 00001}
+DBLOG: 2023/07/23 15:24:56 main.go:873: log/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:71Error 1146: Table 'appliance.appliances' doesn't exist
+DBLOG: 2023/07/23 15:24:56 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:713.313485msINSERT INTO `appliances` (`serial_number`,`brand`,`model`,`status`,`date_bought`) VALUES (?,?,?,?,?)[0000001 sony phone not_sold 00001] 0
+ERROR: 2023/07/23 15:25:25 processor.go:130: error in creating appliance, err:Error 1146: Table 'appliance.appliances' doesn't exist
+INFO: 2023/07/23 15:29:59 processor.go:115: CreateAppliance, req:&{product1 0000001 sony phone not_sold 00001}
+DBLOG: 2023/07/23 15:29:59 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:712.68945msINSERT INTO `appliances` (`serial_number`,`brand`,`model`,`status`,`date_bought`) VALUES (?,?,?,?,?)[0000001 sony phone not_sold 00001] 1
+ERROR: 2023/07/23 15:31:38 processor.go:208: error in ViewAllAppliance ShouldBindJSON, err:EOF
+DBLOG: 2023/07/23 15:31:46 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:661.71097msSELECT * FROM `appliances`  [] 1
+INFO: 2023/07/23 15:31:46 processor.go:231: req:&{0     }, resp:[{1 0000001 sony phone not_sold 00001}]
+DBLOG: 2023/07/23 15:32:19 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:662.182371msSELECT * FROM `appliances`  [] 1
+INFO: 2023/07/23 15:32:19 processor.go:231: req:&{0     }, resp:[{1 0000001 sony phone not_sold 00001}]
+ERROR: 2023/07/23 15:33:36 processor.go:157: error in UpdateAppliance ShouldBindJSON, err:json: cannot unmarshal number into Go struct field ApplianceReq.id of type string
+INFO: 2023/07/23 15:33:47 processor.go:164: UpdateAppliance, req:&{1 0000002 sony phone not_sold 00001}
+DBLOG: 2023/07/23 15:33:47 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:766.94386msUPDATE `appliances` SET `brand` = ?, `date_bought` = ?, `model` = ?, `serial_number` = ?, `status` = ?  WHERE (id=?)[sony 00001 phone 0000002 not_sold 1] 1
+INFO: 2023/07/23 15:34:31 processor.go:115: CreateAppliance, req:&{product2 0000002 sony phone not_sold 00002}
+DBLOG: 2023/07/23 15:34:31 main.go:873: log/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:71Error 1062: Duplicate entry '0000002-sony-phone' for key 'appliances.idx_serial_number_brand_model'
+DBLOG: 2023/07/23 15:34:31 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:714.93921msINSERT INTO `appliances` (`serial_number`,`brand`,`model`,`status`,`date_bought`) VALUES (?,?,?,?,?)[0000002 sony phone not_sold 00002] 0
+ERROR: 2023/07/23 15:34:31 processor.go:130: error in creating appliance, err:Error 1062: Duplicate entry '0000002-sony-phone' for key 'appliances.idx_serial_number_brand_model'
+INFO: 2023/07/23 15:35:00 processor.go:115: CreateAppliance, req:&{ 0000003 sony phone not_sold 00003}
+DBLOG: 2023/07/23 15:35:00 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:714.22097msINSERT INTO `appliances` (`serial_number`,`brand`,`model`,`status`,`date_bought`) VALUES (?,?,?,?,?)[0000003 sony phone not_sold 00003] 1
+INFO: 2023/07/23 15:35:14 processor.go:115: CreateAppliance, req:&{ 0000004 sony phone not_sold 00003}
+DBLOG: 2023/07/23 15:35:14 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:714.199541msINSERT INTO `appliances` (`serial_number`,`brand`,`model`,`status`,`date_bought`) VALUES (?,?,?,?,?)[0000004 sony phone not_sold 00003] 1
+DBLOG: 2023/07/23 15:35:17 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:662.794375msSELECT * FROM `appliances`  [] 3
+INFO: 2023/07/23 15:35:17 processor.go:231: req:&{0     }, resp:[{1 0000002 sony phone not_sold 00001} {3 0000003 sony phone not_sold 00003} {4 0000004 sony phone not_sold 00003}]
+INFO: 2023/07/23 15:35:58 processor.go:76: CreateAppliance, req:&{ 0000002 sony phone  }
+DBLOG: 2023/07/23 15:35:58 main.go:873: log/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:60Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'brand="sony"Model="phone")' at line 1
+DBLOG: 2023/07/23 15:35:58 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:601.438377msSELECT * FROM `appliances`  WHERE (serial_number="0000002"brand="sony"Model="phone")[] 0
+ERROR: 2023/07/23 15:35:58 processor.go:90: error in creating appliance, err:Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'brand="sony"Model="phone")' at line 1
+INFO: 2023/07/23 15:40:32 processor.go:76: CreateAppliance, req:&{ 0000002 sony phone  }
+DBLOG: 2023/07/23 15:40:32 main.go:873: log/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:63Error 1241: Operand should contain 1 column(s)
+DBLOG: 2023/07/23 15:40:32 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:633.988164msSELECT * FROM `appliances`  WHERE (serial_number="0000002",brand="sony",Model="phone")[] 0
+ERROR: 2023/07/23 15:40:32 processor.go:90: error in creating appliance, err:Error 1241: Operand should contain 1 column(s)
+INFO: 2023/07/23 15:42:20 processor.go:76: CreateAppliance, req:&{ 0000002 sony phone  }
+DBLOG: 2023/07/23 15:42:20 main.go:873: log/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:63Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+DBLOG: 2023/07/23 15:42:20 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:632.316046msSELECT * FROM `appliances`  WHERE (serial_number="0000002" and brand="sony" and model="phone" and )[] 0
+ERROR: 2023/07/23 15:42:20 processor.go:90: error in creating appliance, err:Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+INFO: 2023/07/23 15:42:40 processor.go:76: CreateAppliance, req:&{ 0000002 sony phone  }
+DBLOG: 2023/07/23 15:42:40 main.go:873: log/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:63Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'a)' at line 1
+DBLOG: 2023/07/23 15:42:40 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:633.579744msSELECT * FROM `appliances`  WHERE (serial_number="0000002" and brand="sony" and model="phone" a)[] 0
+ERROR: 2023/07/23 15:42:40 processor.go:90: error in creating appliance, err:Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'a)' at line 1
+INFO: 2023/07/23 15:42:52 processor.go:76: CreateAppliance, req:&{ 0000002 sony phone  }
+DBLOG: 2023/07/23 15:42:52 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:633.916966msSELECT * FROM `appliances`  WHERE (serial_number="0000002" and brand="sony" and model="phone" )[] 1
+INFO: 2023/07/23 15:42:58 processor.go:76: CreateAppliance, req:&{  sony phone  }
+DBLOG: 2023/07/23 15:42:58 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:632.8695msSELECT * FROM `appliances`  WHERE (brand="sony" and model="phone" )[] 3

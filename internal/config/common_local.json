@@ -1,11 +1,11 @@
 {
   "common": {
-    "server_port": "8085"
+    "server_port": "80"
   },
   "db_config": {
-    "url": "postgres:5432",
-    "username":"root",
-    "password": "",
+    "url": "localhost:8080",
+    "username":"spgroup",
+    "password": "password",
     "database": "appliance"
   }
 }

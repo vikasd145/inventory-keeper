@@ -13,12 +13,12 @@ var configFile = flag.String("config", "internal/config/common_local.json", "con
 func main() {
 	flag.Parse()
 	config.ReadConfig(*configFile)
-	err := sql.DBConn(config.Config.DBConfig)
+	db, err := sql.DBConn(config.Config.DBConfig)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer sql.DB.Close()
+	defer db.Close()
 	//sql.DB.AutoMigrate(&user.User{}, &company.Company{}, &code.Code{})
 	//sql.DB.Table("users").AutoMigrate(&user.CreateUserModel{})
-	sql.DB.AutoMigrate(&appliance.Appliance{})
+	db.AutoMigrate(&appliance.Appliance{})
 }
