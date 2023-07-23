@@ -33,10 +33,15 @@ func RunServer() {
 	r.POST("/appliance/create", ap.CreateAppliance)
 	r.POST("/appliance/update", ap.UpdateAppliance)
 	r.GET("/appliance/view/all", ap.ViewAllAppliance)
-
-	err = r.Run(":" + config.Config.Common.ServerPort)
-	if err != nil {
-		panic(fmt.Sprintf("Error starting server: %v", err))
+	go func() {
+		err = r.Run(":" + config.Config.Common.ServerPort)
+		if err != nil {
+			panic(fmt.Sprintf("Error starting server: %v", err))
+		}
+	}()
+	// Running HTTPS server
+	if err := r.RunTLS(":"+config.Config.Common.ServerHttpsPort, "server.crt", "server.key"); err != nil {
+		log.Fatalf("Failed to run server: %v", err)
 	}
 }
 

@@ -1,6 +1,7 @@
 {
   "common": {
-    "server_port": "80"
+    "server_port": "80",
+    "server_https_port": "8443"
   },
   "db_config": {
     "url": "localhost:8080",

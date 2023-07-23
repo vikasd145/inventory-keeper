@@ -46,3 +46,13 @@ INFO: 2023/07/23 15:42:52 processor.go:76: CreateAppliance, req:&{ 0000002 sony 
 DBLOG: 2023/07/23 15:42:52 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:633.916966msSELECT * FROM `appliances`  WHERE (serial_number="0000002" and brand="sony" and model="phone" )[] 1
 INFO: 2023/07/23 15:42:58 processor.go:76: CreateAppliance, req:&{  sony phone  }
 DBLOG: 2023/07/23 15:42:58 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:632.8695msSELECT * FROM `appliances`  WHERE (brand="sony" and model="phone" )[] 3
+INFO: 2023/07/23 21:32:35 processor.go:115: CreateAppliance, req:&{ 0000004 sony phone not_sold 00003}
+DBLOG: 2023/07/23 21:32:36 main.go:873: log/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:74Error 1062: Duplicate entry '0000004-sony-phone' for key 'appliances.idx_serial_number_brand_model'
+DBLOG: 2023/07/23 21:32:36 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:74104.141513msINSERT INTO `appliances` (`serial_number`,`brand`,`model`,`status`,`date_bought`) VALUES (?,?,?,?,?)[0000004 sony phone not_sold 00003] 0
+ERROR: 2023/07/23 21:32:36 processor.go:130: error in creating appliance, err:Error 1062: Duplicate entry '0000004-sony-phone' for key 'appliances.idx_serial_number_brand_model'
+INFO: 2023/07/23 21:37:08 processor.go:115: CreateAppliance, req:&{ 0000004 sony phone not_sold 00003}
+DBLOG: 2023/07/23 21:37:08 main.go:873: log/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:74Error 1062: Duplicate entry '0000004-sony-phone' for key 'appliances.idx_serial_number_brand_model'
+DBLOG: 2023/07/23 21:37:08 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:7412.530984msINSERT INTO `appliances` (`serial_number`,`brand`,`model`,`status`,`date_bought`) VALUES (?,?,?,?,?)[0000004 sony phone not_sold 00003] 0
+ERROR: 2023/07/23 21:37:08 processor.go:130: error in creating appliance, err:Error 1062: Duplicate entry '0000004-sony-phone' for key 'appliances.idx_serial_number_brand_model'
+INFO: 2023/07/23 21:37:19 processor.go:115: CreateAppliance, req:&{ 0000005 sony phone not_sold 00003}
+DBLOG: 2023/07/23 21:37:19 main.go:873: sql/Users/vikasdubey/inventory-keeper/internal/appliance/model.go:7442.788068msINSERT INTO `appliances` (`serial_number`,`brand`,`model`,`status`,`date_bought`) VALUES (?,?,?,?,?)[0000005 sony phone not_sold 00003] 1

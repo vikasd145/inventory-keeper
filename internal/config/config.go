@@ -25,7 +25,8 @@ type Credentials struct {
 }
 
 type CommonConfig struct {
-	ServerPort string `json:"server_port"`
+	ServerPort      string `json:"server_port"`
+	ServerHttpsPort string `json:"server_https_port"`
 }
 
 func ReadConfig(configFile string) {
