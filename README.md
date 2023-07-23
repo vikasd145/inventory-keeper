@@ -7,6 +7,8 @@ openssl req -new -x509 -sha256 -key server.key -out server.crt -days 3650
 ```
 - https server running on `8443` and http server running on port `80`
 - unit test case written as an example in `internal/appliance/model_test.go`
+- Server is hosted on aws EC2 instance and mysql is also running inside
+- 
 
 ## Possible Improvements
 1. Test coverage should be 80%
